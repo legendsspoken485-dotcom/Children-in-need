@@ -1,0 +1,28 @@
+{
+  "name": "HOPEBRIDGE | Every Child Deserves a Chance",
+  "short_name": "HOPEBRIDGE",
+  "description": "An international child-welfare charity dedicated to family-based care, nutrition, safe shelter, education, healthcare, and clean water.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FCFAF7",
+  "theme_color": "#EA580C",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32 48x48 64x64",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

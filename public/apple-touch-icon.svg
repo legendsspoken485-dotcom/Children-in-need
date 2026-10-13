@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none">
+  <!-- Apple Touch Icon background -->
+  <rect width="180" height="180" rx="36" fill="#FFFFFF"/>
+  <rect x="1" y="1" width="178" height="178" rx="35" stroke="#E7E5E4" stroke-width="2"/>
+  
+  <!-- Centered Orange Bridge (scaled to fit with balanced margins) -->
+  <g transform="translate(26, 32) scale(2)">
+    <!-- Primary sweeping curved arch -->
+    <path
+      d="M 7 43 C 15 18 23 12 32 12 C 41 12 49 18 57 43"
+      stroke="#EA580C"
+      stroke-width="5.5"
+      stroke-linecap="round"
+    />
+    <!-- Structural roadway deck -->
+    <rect x="4" y="33" width="56" height="4" rx="2" fill="#0F172A" />
+    <!-- Vertical suspension / structural cables -->
+    <line x1="17" y1="26" x2="17" y2="33" stroke="#F97316" stroke-width="3" stroke-linecap="round" />
+    <line x1="24" y1="17.6" x2="24" y2="33" stroke="#F97316" stroke-width="3" stroke-linecap="round" />
+    <line x1="32" y1="12" x2="32" y2="33" stroke="#F97316" stroke-width="3.2" stroke-linecap="round" />
+    <line x1="40" y1="17.6" x2="40" y2="33" stroke="#F97316" stroke-width="3" stroke-linecap="round" />
+    <line x1="47" y1="26" x2="47" y2="33" stroke="#F97316" stroke-width="3" stroke-linecap="round" />
+    <!-- Pier pillars -->
+    <rect x="11" y="37" width="4" height="13" rx="1" fill="#0F172A" />
+    <rect x="49" y="37" width="4" height="13" rx="1" fill="#0F172A" />
+    <!-- Foundation waterlines -->
+    <path d="M 6 50 H 20 M 44 50 H 58" stroke="#0F172A" stroke-width="3" stroke-linecap="round" />
+    <path d="M 25 50 H 39" stroke="#EA580C" stroke-width="3" stroke-linecap="round" />
+  </g>
+</svg>

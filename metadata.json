@@ -1,0 +1,6 @@
+{
+  "name": "HOPEBRIDGE",
+  "description": "Every Child Deserves a Chance. An international child-welfare charity dedicated to family-based care, nutrition, safe shelter, education, healthcare, and clean water.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
