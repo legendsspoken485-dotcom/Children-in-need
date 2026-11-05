@@ -115,10 +115,42 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
-                  onClick={() => onNavigate('get-involved')}
+                  onClick={() => onNavigate('transparency')}
                   className="text-stone-400 hover:text-white transition-colors cursor-pointer"
                 >
-                  Get Involved & Volunteer
+                  Transparency & Ledger
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onNavigate('verified-needs')}
+                  className="text-stone-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  Verified Needs Directory
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onNavigate('network')}
+                  className="text-stone-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  Volunteer & Partner Network
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onNavigate('matching')}
+                  className="text-stone-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  Intelligent Aid Matching
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onNavigate('admin')}
+                  className="text-stone-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  Admin Command Center
                 </button>
               </li>
               <li>

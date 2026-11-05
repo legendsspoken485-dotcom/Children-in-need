@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, ShieldAlert, CheckCircle2, AlertTriangle, RefreshCw, Send, HelpCircle } from 'lucide-react';
 import { ContactSubmission, PageId } from '../types';
+import { reportSafeguardingIncident, logAuditEvent } from '../db/storage';
 
 interface ContactPageProps {
   onNavigatePolicy: (policy: PageId) => void;
@@ -63,16 +64,35 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigatePolicy }) =>
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
 
-    // Simulate secure server-side transmission and ticket creation
-    setTimeout(() => {
-      setIsSubmitting(false);
-      const ref = `HB-INQ-${Date.now().toString().slice(-6)}`;
+    try {
+      let ref = `HB-INQ-${Date.now().toString().slice(-6)}`;
+
+      if (formData.category === 'safeguarding') {
+        const inc = await reportSafeguardingIncident({
+          reporterPseudonym: formData.name || 'Anonymous Safeguarding Report',
+          reporterContactEncrypted: formData.email,
+          category: 'exploitation_risk',
+          severity: 'high',
+          description: `Subject: ${formData.subject}. Message: ${formData.message}`
+        });
+        ref = inc.referenceNumber;
+      } else {
+        await logAuditEvent(
+          formData.name,
+          'public',
+          'RECORD_CREATED',
+          'ContactInquiry',
+          ref,
+          `Inquiry received (${formData.category}): ${formData.subject}`
+        );
+      }
+
       setLastSubmittedTime(Date.now());
       setSubmissionResult({
         referenceId: ref,
@@ -87,7 +107,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigatePolicy }) =>
         message: ''
       });
       setSpamAnswer('');
-    }, 1000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Interactive FAQ Accordion state

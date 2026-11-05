@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Heart, ShieldCheck, CheckCircle2, AlertTriangle, ArrowRight, RefreshCw, Printer } from 'lucide-react';
+import { Heart, ShieldCheck, CheckCircle2, AlertTriangle, ArrowRight, RefreshCw, Printer, Lock } from 'lucide-react';
 import { CAUSES_DATA } from '../data/causes';
 import { DEMO_CAMPAIGNS } from '../data/campaigns';
 import { Logo } from '../components/Logo';
-import { DonationSubmission } from '../types';
+import { recordDonation } from '../db/storage';
+import { DonationSubmission, DonationRecord } from '../types';
 
 interface DonatePageProps {
   initialCauseId?: string;
@@ -86,22 +87,35 @@ export const DonatePage: React.FC<DonatePageProps> = ({
     return Object.keys(errs).length === 0;
   };
 
-  const handleSimulateDonation = (e: React.FormEvent) => {
+  const [createdLedgerRecord, setCreatedLedgerRecord] = useState<DonationRecord | null>(null);
+
+  const handleSimulateDonation = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSimulating(true);
 
-    // Simulate reliable provider handshake and idempotency verification
-    setTimeout(() => {
-      setIsSimulating(false);
-      const generatedRef = `DEMO-HB-${Date.now().toString().slice(-6)}`;
+    try {
+      const rec = await recordDonation({
+        campaignId: selectedFund.startsWith('campaign:') ? selectedFund.split(':')[1] : undefined,
+        campaignTitle: getSelectedFundLabel(),
+        frequency,
+        amount: finalAmount,
+        currency,
+        coverFees,
+        donorName,
+        donorEmail,
+        dedication,
+        paymentMethod
+      });
+
+      setCreatedLedgerRecord(rec);
       setCompletedReceipt({
-        referenceId: generatedRef,
-        timestamp: new Date().toLocaleString(),
+        referenceId: rec.referenceCode,
+        timestamp: new Date(rec.timestamp).toLocaleString(),
         details: {
-          campaignId: selectedFund.startsWith('campaign:') ? selectedFund.split(':')[1] : undefined,
-          campaignTitle: getSelectedFundLabel(),
+          campaignId: rec.campaignId,
+          campaignTitle: rec.campaignTitle || getSelectedFundLabel(),
           frequency,
           amount: finalAmount,
           currency,
@@ -114,7 +128,9 @@ export const DonatePage: React.FC<DonatePageProps> = ({
         feeAmount: estimatedFee,
         totalAmount: totalCharged
       });
-    }, 1200);
+    } finally {
+      setIsSimulating(false);
+    }
   };
 
   const getSelectedFundLabel = () => {
@@ -204,6 +220,15 @@ export const DonatePage: React.FC<DonatePageProps> = ({
                   {completedReceipt.totalAmount.toFixed(2)} {completedReceipt.details.currency}
                 </span>
               </div>
+
+              {createdLedgerRecord && (
+                <div className="pt-3 border-t border-stone-100 text-[11px] font-mono text-stone-500 break-all">
+                  <span className="font-bold text-stone-700 block mb-0.5">SHA-256 Ledger Verification Hash:</span>
+                  <div className="p-2 bg-stone-100 rounded-lg text-stone-600 select-all border border-stone-200">
+                    {createdLedgerRecord.sha256Hash}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Actions */}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Heart, Shield, Users, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Heart, Shield, Users, Sparkles, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { CauseCard } from '../components/CauseCard';
 import { CampaignCard } from '../components/CampaignCard';
 import { CAUSES_DATA } from '../data/causes';
@@ -238,6 +238,89 @@ export const HomePage: React.FC<HomePageProps> = ({
                 onDonateToCampaign={onDonateCampaign}
               />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4.5: OPEN AID TRANSPARENCY & VERIFIED BENEFICIARY NETWORK */}
+      <section className="py-12 bg-white border-y border-stone-200/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-5 space-y-4">
+              <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200">
+                Open Accountability Infrastructure
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 leading-tight">
+                Cryptographic Financial Ledger & Verified Beneficiary Roster
+              </h2>
+              <p className="text-stone-600 text-sm leading-relaxed">
+                HOPEBRIDGE operates on zero-fabrication principles. Review every donation record, trace authorized field disbursements to accredited NGOs, and inspect child-safe pseudonymized assistance requests vetted by licensed social workers and physicians.
+              </p>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <button
+                  onClick={() => onNavigate('transparency')}
+                  className="px-5 py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold flex items-center gap-2 cursor-pointer transition-colors shadow-xs"
+                >
+                  <span>Open Transparency Ledger</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => onNavigate('verified-needs')}
+                  className="px-5 py-2.5 rounded-xl border border-stone-300 hover:bg-stone-50 text-stone-800 text-xs font-semibold flex items-center gap-2 cursor-pointer transition-colors"
+                >
+                  <span>View Verified Needs</span>
+                </button>
+                <button
+                  onClick={() => onNavigate('matching')}
+                  className="px-5 py-2.5 rounded-xl bg-orange-50 hover:bg-orange-100 text-orange-800 border border-orange-200 text-xs font-semibold flex items-center gap-2 cursor-pointer transition-colors"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-orange-600" />
+                  <span>Aid Matching Engine</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-5 rounded-2xl bg-[#FCFAF7] border border-stone-200 shadow-2xs">
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs mb-3">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <h3 className="font-bold text-stone-900 text-sm mb-1">Child Privacy Shield</h3>
+                <p className="text-xs text-stone-600 leading-relaxed">
+                  Full names, addresses, and vulnerable child photos are strictly protected. Cases use verifiable codes with guardian consent.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-[#FCFAF7] border border-stone-200 shadow-2xs">
+                <div className="w-8 h-8 rounded-lg bg-orange-100 text-orange-800 flex items-center justify-center font-bold text-xs mb-3">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+                <h3 className="font-bold text-stone-900 text-sm mb-1">SHA-256 Ledger Audit</h3>
+                <p className="text-xs text-stone-600 leading-relaxed">
+                  Every donation generates a tamper-evident receipt and cryptographic hash verifying allocation to field initiatives.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-[#FCFAF7] border border-stone-200 shadow-2xs">
+                <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-800 flex items-center justify-center font-bold text-xs mb-3">
+                  <Users className="w-4 h-4" />
+                </div>
+                <h3 className="font-bold text-stone-900 text-sm mb-1">Cleared Volunteer Network</h3>
+                <p className="text-xs text-stone-600 leading-relaxed">
+                  Background checked, safeguarding trained nurses, teachers, and water engineers deployed with accredited local partners.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-[#FCFAF7] border border-stone-200 shadow-2xs">
+                <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 flex items-center justify-center font-bold text-xs mb-3">
+                  <Sparkles className="w-4 h-4" />
+                </div>
+                <h3 className="font-bold text-stone-900 text-sm mb-1">No Duplicate Aid Allocations</h3>
+                <p className="text-xs text-stone-600 leading-relaxed">
+                  Algorithmic matching pairs verified urgency with available donations and locks resources to prevent aid double-spending.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

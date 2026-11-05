@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Heart, Users, Handshake, BookOpen, Share2, CheckCircle2, RefreshCw, Send, AlertCircle } from 'lucide-react';
 import { PageId, VolunteerSubmission } from '../types';
+import { registerVolunteer } from '../db/storage';
 
 interface GetInvolvedPageProps {
   onNavigate: (page: PageId, causeId?: string) => void;
@@ -95,15 +96,15 @@ export const GetInvolvedPage: React.FC<GetInvolvedPageProps> = ({ onNavigate }) 
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const vol = await registerVolunteer(formData);
       setSubmittedTicket({
-        ticketId: `HB-VOL-${Date.now().toString().slice(-6)}`,
+        ticketId: vol.id,
         submittedAt: new Date().toLocaleDateString(),
         data: { ...formData }
       });
@@ -116,7 +117,9 @@ export const GetInvolvedPage: React.FC<GetInvolvedPageProps> = ({ onNavigate }) 
         availability: 'monthly',
         backgroundNote: ''
       });
-    }, 900);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

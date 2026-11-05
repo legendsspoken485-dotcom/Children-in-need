@@ -164,56 +164,81 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
             onClick={() => handleLinkClick('campaigns')}
             className={`transition-all whitespace-nowrap shrink-0 py-1 cursor-pointer relative ${
               currentPage === 'campaigns'
-                ? 'text-rose-600 font-semibold'
+                ? 'text-orange-600 font-semibold'
                 : 'text-stone-700 hover:text-stone-900'
             }`}
           >
             Campaigns
             {currentPage === 'campaigns' && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-rose-600 rounded-full" />
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-600 rounded-full" />
             )}
           </button>
 
           <button
-            onClick={() => handleLinkClick('about')}
+            onClick={() => handleLinkClick('verified-needs')}
             className={`transition-all whitespace-nowrap shrink-0 py-1 cursor-pointer relative ${
-              currentPage === 'about'
-                ? 'text-rose-600 font-semibold'
+              currentPage === 'verified-needs'
+                ? 'text-orange-600 font-semibold'
                 : 'text-stone-700 hover:text-stone-900'
             }`}
           >
-            About Us
-            {currentPage === 'about' && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-rose-600 rounded-full" />
+            Verified Needs
+            {currentPage === 'verified-needs' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-600 rounded-full" />
             )}
           </button>
 
           <button
-            onClick={() => handleLinkClick('get-involved')}
+            onClick={() => handleLinkClick('transparency')}
             className={`transition-all whitespace-nowrap shrink-0 py-1 cursor-pointer relative ${
-              currentPage === 'get-involved'
-                ? 'text-rose-600 font-semibold'
+              currentPage === 'transparency'
+                ? 'text-orange-600 font-semibold'
                 : 'text-stone-700 hover:text-stone-900'
             }`}
           >
-            Get Involved
-            {currentPage === 'get-involved' && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-rose-600 rounded-full" />
+            Transparency
+            {currentPage === 'transparency' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-600 rounded-full" />
             )}
           </button>
 
           <button
-            onClick={() => handleLinkClick('contact')}
+            onClick={() => handleLinkClick('network')}
             className={`transition-all whitespace-nowrap shrink-0 py-1 cursor-pointer relative ${
-              currentPage === 'contact'
-                ? 'text-rose-600 font-semibold'
+              currentPage === 'network'
+                ? 'text-orange-600 font-semibold'
                 : 'text-stone-700 hover:text-stone-900'
             }`}
           >
-            Contact
-            {currentPage === 'contact' && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-rose-600 rounded-full" />
+            Network
+            {currentPage === 'network' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-600 rounded-full" />
             )}
+          </button>
+
+          <button
+            onClick={() => handleLinkClick('matching')}
+            className={`transition-all whitespace-nowrap shrink-0 py-1 cursor-pointer relative ${
+              currentPage === 'matching'
+                ? 'text-orange-600 font-semibold'
+                : 'text-stone-700 hover:text-stone-900'
+            }`}
+          >
+            Aid Matching
+            {currentPage === 'matching' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-600 rounded-full" />
+            )}
+          </button>
+
+          <button
+            onClick={() => handleLinkClick('admin')}
+            className={`transition-all whitespace-nowrap shrink-0 py-1 cursor-pointer relative text-xs px-2.5 py-1 rounded-lg border ${
+              currentPage === 'admin'
+                ? 'bg-stone-900 text-white border-stone-900'
+                : 'border-stone-200 text-stone-700 hover:border-stone-400'
+            }`}
+          >
+            Admin
           </button>
         </nav>
 
@@ -268,8 +293,13 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                 { label: 'Home', page: 'home' as PageId },
                 { label: 'Our Causes Overview', page: 'causes' as PageId },
                 { label: 'Campaigns & Pilots', page: 'campaigns' as PageId },
+                { label: 'Verified Needs & Cases', page: 'verified-needs' as PageId },
+                { label: 'Financial Transparency Ledger', page: 'transparency' as PageId },
+                { label: 'Volunteers & NGO Network', page: 'network' as PageId },
+                { label: 'Intelligent Aid Matching', page: 'matching' as PageId },
+                { label: 'Admin Command Center', page: 'admin' as PageId },
                 { label: 'About Us & Mission', page: 'about' as PageId },
-                { label: 'Get Involved & Volunteer', page: 'get-involved' as PageId },
+                { label: 'Get Involved', page: 'get-involved' as PageId },
                 { label: 'Contact & Safeguarding', page: 'contact' as PageId },
               ].map((item) => {
                 const isActive = currentPage === item.page;
@@ -277,9 +307,9 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                   <button
                     key={item.page}
                     onClick={() => handleLinkClick(item.page)}
-                    className={`text-left text-base py-2.5 px-3 rounded-lg transition-all cursor-pointer ${
+                    className={`text-left text-sm py-2 px-3 rounded-lg transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-rose-50/90 text-rose-700 font-bold border border-rose-200/60'
+                        ? 'bg-orange-50/90 text-orange-700 font-bold border border-orange-200/60'
                         : 'text-stone-800 hover:bg-white/80 font-medium'
                     }`}
                   >

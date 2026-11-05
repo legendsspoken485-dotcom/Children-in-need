@@ -10,6 +10,13 @@ import { GetInvolvedPage } from './pages/GetInvolvedPage';
 import { DonatePage } from './pages/DonatePage';
 import { ContactPage } from './pages/ContactPage';
 import { PolicyPage } from './pages/PolicyPage';
+import { TransparencyPage } from './pages/TransparencyPage';
+import { VerifiedNeedsPage } from './pages/VerifiedNeedsPage';
+import { NetworkPage } from './pages/NetworkPage';
+import { MatchingPage } from './pages/MatchingPage';
+import { AdminCenterPage } from './pages/AdminCenterPage';
+import { AuthProvider } from './context/AuthContext';
+import { initializeDatabase } from './db/storage';
 import { CAUSES_DATA } from './data/causes';
 import { DEMO_CAMPAIGNS } from './data/campaigns';
 import { PageId, CampaignItem, CauseCategory } from './types';
@@ -19,6 +26,11 @@ export default function App() {
   const [selectedCauseId, setSelectedCauseId] = useState<string>('parental-care');
   const [donationCauseId, setDonationCauseId] = useState<string | undefined>(undefined);
   const [donationCampaignId, setDonationCampaignId] = useState<string | undefined>(undefined);
+
+  // Initialize persistent database engine on application boot
+  useEffect(() => {
+    initializeDatabase();
+  }, []);
 
   // Sync with browser hash if present on initial load
   useEffect(() => {
@@ -39,7 +51,12 @@ export default function App() {
           'contact',
           'safeguarding',
           'privacy',
-          'donation-terms'
+          'donation-terms',
+          'transparency',
+          'verified-needs',
+          'network',
+          'matching',
+          'admin'
         ].includes(page)
       ) {
         setCurrentPage(page as PageId);
@@ -95,75 +112,100 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FCFAF7] text-stone-900 font-sans selection:bg-rose-100 selection:text-rose-900">
-      {/* Top Navigation */}
-      <Header currentPage={currentPage} onNavigate={navigateTo} />
+    <AuthProvider>
+      <div className="min-h-screen flex flex-col bg-[#FCFAF7] text-stone-900 font-sans selection:bg-orange-100 selection:text-orange-900">
+        {/* Top Navigation */}
+        <Header currentPage={currentPage} onNavigate={navigateTo} />
 
-      {/* Main Content Area */}
-      <main className="flex-1">
-        {currentPage === 'home' && (
-          <HomePage
-            onNavigate={navigateTo}
-            onSelectCause={handleSelectCause}
-            onDonate={handleDonateToCause}
-            onDonateCampaign={handleDonateToCampaign}
-          />
-        )}
+        {/* Main Content Area */}
+        <main className="flex-1">
+          {currentPage === 'home' && (
+            <HomePage
+              onNavigate={navigateTo}
+              onSelectCause={handleSelectCause}
+              onDonate={handleDonateToCause}
+              onDonateCampaign={handleDonateToCampaign}
+            />
+          )}
 
-        {currentPage === 'causes' && (
-          <CausesPage
-            onSelectCause={handleSelectCause}
-            onDonateToCause={handleDonateToCause}
-            onNavigateGetInvolved={() => navigateTo('get-involved')}
-          />
-        )}
+          {currentPage === 'causes' && (
+            <CausesPage
+              onSelectCause={handleSelectCause}
+              onDonateToCause={handleDonateToCause}
+              onNavigateGetInvolved={() => navigateTo('get-involved')}
+            />
+          )}
 
-        {currentPage === 'cause-detail' && (
-          <CauseDetail
-            cause={currentCause}
-            relatedCampaigns={relatedCampaigns}
-            onBack={() => navigateTo('causes')}
-            onSelectCause={handleSelectCause}
-            onDonate={(cId, campId) => navigateTo('donate', cId, campId)}
-            onGetInvolved={() => navigateTo('get-involved')}
-          />
-        )}
+          {currentPage === 'cause-detail' && (
+            <CauseDetail
+              cause={currentCause}
+              relatedCampaigns={relatedCampaigns}
+              onBack={() => navigateTo('causes')}
+              onSelectCause={handleSelectCause}
+              onDonate={(cId, campId) => navigateTo('donate', cId, campId)}
+              onGetInvolved={() => navigateTo('get-involved')}
+            />
+          )}
 
-        {currentPage === 'campaigns' && (
-          <CampaignsPage
-            onDonateToCampaign={handleDonateToCampaign}
-            onSelectCause={handleSelectCause}
-          />
-        )}
+          {currentPage === 'campaigns' && (
+            <CampaignsPage
+              onDonateToCampaign={handleDonateToCampaign}
+              onSelectCause={handleSelectCause}
+            />
+          )}
 
-        {currentPage === 'about' && <AboutPage onNavigate={navigateTo} />}
+          {currentPage === 'transparency' && (
+            <TransparencyPage onNavigate={navigateTo} />
+          )}
 
-        {currentPage === 'get-involved' && <GetInvolvedPage onNavigate={navigateTo} />}
+          {currentPage === 'verified-needs' && (
+            <VerifiedNeedsPage
+              onNavigate={navigateTo}
+              onDonateToNeed={() => navigateTo('donate')}
+            />
+          )}
 
-        {currentPage === 'donate' && (
-          <DonatePage
-            initialCauseId={donationCauseId}
-            initialCampaignId={donationCampaignId}
-            onNavigateHome={() => navigateTo('home')}
-          />
-        )}
+          {currentPage === 'network' && (
+            <NetworkPage onNavigate={navigateTo} />
+          )}
 
-        {currentPage === 'contact' && (
-          <ContactPage onNavigatePolicy={(policy) => navigateTo(policy)} />
-        )}
+          {currentPage === 'matching' && (
+            <MatchingPage onNavigate={navigateTo} />
+          )}
 
-        {(currentPage === 'safeguarding' ||
-          currentPage === 'privacy' ||
-          currentPage === 'donation-terms') && (
-          <PolicyPage
-            initialPolicy={currentPage}
-            onNavigateHome={() => navigateTo('home')}
-          />
-        )}
-      </main>
+          {currentPage === 'admin' && (
+            <AdminCenterPage onNavigate={navigateTo} />
+          )}
 
-      {/* Comprehensive Footer */}
-      <Footer onNavigate={navigateTo} />
-    </div>
+          {currentPage === 'about' && <AboutPage onNavigate={navigateTo} />}
+
+          {currentPage === 'get-involved' && <GetInvolvedPage onNavigate={navigateTo} />}
+
+          {currentPage === 'donate' && (
+            <DonatePage
+              initialCauseId={donationCauseId}
+              initialCampaignId={donationCampaignId}
+              onNavigateHome={() => navigateTo('home')}
+            />
+          )}
+
+          {currentPage === 'contact' && (
+            <ContactPage onNavigatePolicy={(policy) => navigateTo(policy)} />
+          )}
+
+          {(currentPage === 'safeguarding' ||
+            currentPage === 'privacy' ||
+            currentPage === 'donation-terms') && (
+            <PolicyPage
+              initialPolicy={currentPage}
+              onNavigateHome={() => navigateTo('home')}
+            />
+          )}
+        </main>
+
+        {/* Comprehensive Footer */}
+        <Footer onNavigate={navigateTo} />
+      </div>
+    </AuthProvider>
   );
 }
